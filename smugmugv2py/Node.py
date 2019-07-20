@@ -43,7 +43,7 @@ class Node(object):
 
 		return ret
 
-	def __create_child_node(self, connection, type, name, url, privacy, description):
+	def __create_child_node(self, connection, type, name, url, privacy, security, description):
 		headers = {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json',
@@ -54,6 +54,7 @@ class Node(object):
 			'Name': name,
 			'UrlName': url,
 			'Privacy': privacy,
+			'SecurityType': security,
 		}
 
 		if description:
@@ -61,16 +62,16 @@ class Node(object):
 
 		return connection.post(self.__child_nodes, data=dumps(params), headers=headers)
 
-	def create_child_folder(self, connection, name, url, privacy, description=None):
-		response = self.__create_child_node(connection, 'Folder', name, url, privacy, description)
+	def create_child_folder(self, connection, name, url, privacy, security, description=None):
+		response = self.__create_child_node(connection, 'Folder', name, url, privacy, security, description)
 
 		if not "Node" in response["Response"]:
 			pprint(response)
 
 		return Node(response["Response"]["Node"])
 
-	def create_child_album(self, connection, name, url, privacy, description=None):
-		response = self.__create_child_node(connection, 'Album', name, url, privacy, description)
+	def create_child_album(self, connection, name, url, privacy, security, description=None):
+		response = self.__create_child_node(connection, 'Album', name, url, privacy, security, description)
 
 		if not "Node" in response["Response"]:
 			pprint(response)

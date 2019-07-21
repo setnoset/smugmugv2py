@@ -107,12 +107,12 @@ class Connection(object):
 				if attempt == 5:
 					raise
 
-	def post(self, uri, headers=None, data=None):
+	def post(self, uri, headers={}, data=''):
 		return self.raw_post(self.__API_ORIGIN + uri,
 			headers=headers,
 			data=data)
 
-	def raw_post(self, uri, headers=None, data=None):
+	def raw_post(self, uri, headers={}, data=''):
 		headers['User-Agent'] = self.__user_agent
 
 		response=loads(self.__SESSION.post(
